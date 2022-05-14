@@ -48,8 +48,10 @@
                     </div>
 
                     <p class="text-center">
-                        <a href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a>
+                        <a href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a><br>
+                        {{ __('Do not have an account?') }} <a href="{{ route('register') }}">{{ __('Register') }}</a>
                     </p>
+
                 </form>
             </div>
         </div>

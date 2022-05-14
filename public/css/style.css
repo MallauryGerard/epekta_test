@@ -1,0 +1,16 @@
+main {
+    min-height: 100vh;
+}
+
+.toast {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    z-index: 999;
+}
+
+.fixed-top-left {
+    position : fixed;
+    top: 5px;
+    left: 5px;
+}
