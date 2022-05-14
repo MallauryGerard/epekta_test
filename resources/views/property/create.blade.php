@@ -10,7 +10,7 @@
 
             <div class="md-form mb-4">
                 <label for="images" class="form-label">{{ __('Images') }}</label>
-                <input class="form-control" type="file" id="images" multiple />
+                <input class="form-control" type="file" name="images[]" id="images" multiple />
                 @error('images')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

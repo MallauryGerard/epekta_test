@@ -58,6 +58,11 @@ class PropertyController extends Controller
         $property->price = $validated['price'];
         $property->address = $validated['address'];
         $property->user_id = auth()->user()->id;
+
+        foreach ($validated['images'] as $image) {
+            $property->addMedia($image)->toMediaCollection(Property::$media_collection);
+        }
+
         $property->save();
 
         $descriptions = [];
@@ -69,8 +74,6 @@ class PropertyController extends Controller
         }
 
         $property->descriptions()->saveMany($descriptions);
-
-        // TODO photos
 
         return redirect(route('property.index'))->with('success', __('Property has been created!'));
     }
@@ -117,6 +120,7 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
+        $property->clearMediaCollection(Property::$media_collection);
         Property::destroy($property->id); // Descriptions are automatically destroyed thank to "ONDELETE CASCADE".
 
         return redirect(route('property.index'))->with('success', __('Property has been deleted!'));

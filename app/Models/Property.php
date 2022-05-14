@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Property extends Model
+class Property extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $table = 'Properties';
+    public static $media_collection = 'property';
 
     /**
      * A property belongs to a user
