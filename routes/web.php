@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::resource('property', PropertyController::class, ['only' => ['index', 'show']]);
-
 Route::middleware(['verified'])->group(function () {
     Route::resource('property', PropertyController::class, [
         'only' => [
@@ -24,4 +21,6 @@ Route::middleware(['verified'])->group(function () {
         ]
     ]);
 });
+
+Route::resource('property', PropertyController::class, ['only' => ['index', 'show']]);
 

@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->point('coordinate');
+            $table->string('address');
             $table->integer('price')->unsigned();
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

@@ -14,12 +14,39 @@
 
 <body>
 
-<header class="header navbar-area shadow">
-
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="#">{{ __('Home') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() == 'property' ? 'active' : '' }}" href="#">{{ __('Properties') }}</a>
+                    </li>
+                </ul>
+            </div>
+            @if(Route::currentRouteName() == 'login')
+            <a class="btn btn-primary ml-auto" href="{{ route('register') }}">
+                {{ __('Register') }}
+            </a>
+            @else
+            <a class="btn btn-primary ml-auto" href="{{ route('login') }}">
+                {{ __('Login') }}
+            </a>
+            @endif
+        </div>
+    </nav>
+    <!-- Navbar -->
 </header>
 
 <main>
-    @yield('include.flashMessage')
+    @include('include.flashMessage')
     @yield('content')
 </main>
 
@@ -35,6 +62,9 @@
 <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/js/mdb.min.js') }}"></script>
 <script src="{{ asset('/js/font-awesome.min.js') }}"></script>
+
+@yield('scripts')
+
 <script>
     $('.toast').delay(5000).fadeOut('slow');
 </script>
