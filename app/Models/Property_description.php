@@ -16,7 +16,7 @@ class Property_description extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function Property()
     {
         return $this->BelongsTo(Property::class);
     }
