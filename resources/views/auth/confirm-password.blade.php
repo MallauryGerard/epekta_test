@@ -1,10 +1,6 @@
-@extends('layout.guest')
+@extends('layout.main')
 
 @section('content')
-
-    <a href="{{ url()->previous() }}" type="button" class="btn btn-primary px-3 fixed-top-left">
-        <i class="fas fa-angle-left fa-lg" aria-hidden="true"></i>
-    </a>
 
     <section class="container p-5">
         <!--Form with header-->

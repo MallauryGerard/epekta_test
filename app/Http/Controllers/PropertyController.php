@@ -83,7 +83,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        //
+        return view('property.show', ['property' => $property]);
     }
 
     /**

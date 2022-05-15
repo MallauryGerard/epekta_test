@@ -1,45 +1,52 @@
-@extends('layout.admin')
+@extends('layout.main')
 
 @section('title', ' - ' . __('Properties'))
 
 @section('content')
     <section class="container py-5">
-        <table id="datatable" class="table table-bordered data-table">
-            <thead>
-            <tr>
-                <th>{{ __('Thumbnail') }}</th>
-                <th>{{ __('Address') }}</th>
-                <th>{{ __('Description') }}</th>
-                <th>{{ __('Price') }}</th>
-                <th>{{ __('Created at') }}</th>
-                <th>{{ __('Action') }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($properties as $property)
-            <tr class="datatable-row" data-id="{{ $property->id }}">
-                <td><img width="100px" src="{{ $property->getFirstMediaUrl($property::$media_collection) }}" alt=""></td>
-                <td>{{ $property->address }}</td>
-                <td>{{ $property->descriptions->first()->description }}</td>
-                <td>{{ $property->getFormattedPrice() }}</td>
-                <td>{{ $property->getFormattedDate() }}</td>
-                <td>
-                    <a href="{{ route('property.show', ['property' => $property]) }}" class="btn btn-sm btn-info">
-                        <i class="fa-solid fa-eye"></i>&nbsp; {{ __('View') }}
-                    </a>
-                    @auth
-                    <a href="{{ route('property.edit', ['property' => $property]) }}"class="btn btn-sm btn-primary">
-                        <i class="fa-solid fa-pen-to-square"></i>&nbsp; {{ __('Edit') }}
-                    </a>
-                    <button class="btn btn-sm btn-danger delete" data-id="{{ $property->id }}" data-mdb-toggle="modal" data-mdb-target="#deleteModal">
-                        <i class="fa-solid fa-trash-can"></i>&nbsp; {{ __('Delete') }}
-                    </button>
-                    @endauth
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
+        <div class="card my-3">
+            <div class="card-header text-white bg-dark">
+                <b>{{ __('Properties list') }}</b>
+            </div>
+            <div class="card-body">
+                <table id="datatable" class="table table-bordered data-table">
+                    <thead>
+                    <tr>
+                        <th>{{ __('Thumbnail') }}</th>
+                        <th>{{ __('Address') }}</th>
+                        <th>{{ __('Description') }}</th>
+                        <th>{{ __('Price') }}</th>
+                        <th>{{ __('Created at') }}</th>
+                        <th>{{ __('Action') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($properties as $property)
+                        <tr class="datatable-row" data-id="{{ $property->id }}">
+                            <td><img width="100px" src="{{ $property->getFirstMediaUrl($property::$media_collection) }}" alt=""></td>
+                            <td>{{ $property->address }}</td>
+                            <td>{{ App\Helpers\StringHelper::textPreview($property->descriptions->first()->description) }}</td>
+                            <td>{{ $property->getFormattedPrice() }}</td>
+                            <td>{{ $property->getFormattedDate() }}</td>
+                            <td>
+                                <a href="{{ route('property.show', ['property' => $property]) }}" class="btn btn-sm btn-info m-1">
+                                    <i class="fa-solid fa-eye"></i>&nbsp; {{ __('View') }}
+                                </a>
+                                @auth
+                                    <a href="{{ route('property.edit', ['property' => $property]) }}"class="btn btn-sm btn-primary m-1">
+                                        <i class="fa-solid fa-pen-to-square"></i>&nbsp; {{ __('Edit') }}
+                                    </a>
+                                    <button class="btn btn-sm btn-danger delete m-1" data-id="{{ $property->id }}" data-mdb-toggle="modal" data-mdb-target="#deleteModal">
+                                        <i class="fa-solid fa-trash-can"></i>&nbsp; {{ __('Delete') }}
+                                    </button>
+                                @endauth
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 
     <!-- Modal -->

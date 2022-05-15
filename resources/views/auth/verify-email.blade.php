@@ -1,12 +1,6 @@
-@extends('layout.guest')
+@extends('layout.main')
 
 @section('content')
-    <form id="logout-form" class="" action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-primary mx-auto">
-            <i class="fas fa-power-off"></i>
-        </button>
-    </form>
 
     @if (session('status') == 'verification-link-sent')
         <div class="toast show fade bg-success">

@@ -17,6 +17,14 @@ class Property extends Model implements HasMedia
     ];
 
     protected $table = 'Properties';
+
+    /**
+     * Automatically load the right description while binding route
+     *
+     * @var string[]
+     */
+    protected $with = ['description'];
+
     public static $media_collection = 'property';
 
     /**
@@ -30,7 +38,19 @@ class Property extends Model implements HasMedia
     }
 
     /**
-     * A property has many description (for each translation)
+     * A property has one description for the current language
+     * Be aware ! Only use this relation on one model (or while binding route).
+     * Eager loading is not possible this way.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function description()
+    {
+        return $this->hasOne(Property_description::class)->where('lang', strtoupper(\App::currentLocale()));
+    }
+
+    /**
+     * A property has many descriptions (for each translation)
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
