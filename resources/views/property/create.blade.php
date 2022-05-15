@@ -1,13 +1,13 @@
 @extends('layout.main')
 
-@section('title', ' - ' . __('Create new property'))
+@section('title', ' - ' . __('Add a property'))
 
 @section('content')
 
     <section class="container py-5">
         <div class="card my-3">
             <div class="card-header text-white bg-dark">
-                <b>{{ __('Create new property') }}</b>
+                <b>{{ __('Add a property') }}</b>
             </div>
             <div class="card-body">
                 <form class="md-form" action="{{ route('property.store') }}" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="md-form mb-4">
-                        <input type="number" placeholder="{{ __('price') }}" id="price" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
+                        <input type="number" placeholder="{{ __('Price') }}" id="price" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
                         @error('price')
                         <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

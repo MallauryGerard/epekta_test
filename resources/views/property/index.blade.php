@@ -3,10 +3,10 @@
 @section('title', ' - ' . __('Properties'))
 
 @section('content')
-    <section class="container py-5">
+    <section class="container-fluid p-5">
         <div class="card my-3">
             <div class="card-header text-white bg-dark">
-                <b>{{ __('Properties list') }}</b>
+                <b>{{ __('List of properties') }}</b>
             </div>
             <div class="card-body">
                 <table id="datatable" class="table table-bordered data-table">
@@ -33,7 +33,7 @@
                                     <i class="fa-solid fa-eye"></i>&nbsp; {{ __('View') }}
                                 </a>
                                 @auth
-                                    <a href="{{ route('property.edit', ['property' => $property]) }}"class="btn btn-sm btn-primary m-1">
+                                    <a href="{{ route('property.edit', ['property' => $property]) }}" class="btn btn-sm btn-primary m-1">
                                         <i class="fa-solid fa-pen-to-square"></i>&nbsp; {{ __('Edit') }}
                                     </a>
                                     <button class="btn btn-sm btn-danger delete m-1" data-id="{{ $property->id }}" data-mdb-toggle="modal" data-mdb-target="#deleteModal">
@@ -75,19 +75,28 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#datatable').DataTable();
-            $('.delete').on('click', function() {
+            var options = {};
+            <!-- TODO : improve this to easily add languages -->
+            @if(app()->getLocale() == 'fr')
+                options = {
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json'
+                    }
+                };
+            @endif
+            $('#datatable').DataTable(options);
+            $('.delete').on('click', function () {
                 $('#confirm-deletion').attr('data-id', $(this).attr('data-id'));
             });
-            $('#confirm-deletion').on('click', function() {
+            $('#confirm-deletion').on('click', function () {
                 var id = $(this).attr('data-id');
-                $.ajax( {
+                $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    url : '{{ route('property.destroy', ['property' => 'XXX']) }}'.replace('XXX', id),
-                    type : 'DELETE',
-                    success : function (data) {
+                    url: '{{ route('property.destroy', ['property' => 'XXX']) }}'.replace('XXX', id),
+                    type: 'DELETE',
+                    success: function (data) {
                         $(".datatable-row[data-id='" + id + "']").addClass('d-none');
                         $("#deleteModal").modal('hide');
                     }

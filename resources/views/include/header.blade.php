@@ -33,10 +33,20 @@
                     </li>
                 </ul>
             </div>
+            <div class="btn-group dropstart mx-1 ml-auto">
+                <button class="btn btn-sm btn-outline-primary bg-white dropdown-toggle" type="button" id="langDropdown" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-language fa-xl"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="langDropdown">
+                    @foreach (App\Enums\LangsEnum::toValues() as $lang)
+                        <li><a class="dropdown-item" href="{{ route('lang.update', ['lang' => $lang]) }}">{{ $lang }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
             @auth
-                <div class="btn-group dropstart">
-                    <button class="btn btn-outline-primary bg-white dropdown-toggle" type="button" id="accountDropdown" data-mdb-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user-gear"></i>
+                <div class="btn-group dropstart mx-1">
+                    <button class="btn btn-sm btn-outline-primary bg-white dropdown-toggle" type="button" id="accountDropdown" data-mdb-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user-gear fa-xl"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                         <li><a class="dropdown-item" href="#">{{ __('My account') }}</a></li>

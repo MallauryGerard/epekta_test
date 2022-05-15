@@ -17,6 +17,6 @@
 @endif
 @if (isset($errors) && $errors->any())
     <div class="toast show fade bg-danger" style="position: absolute; right: 15px; top: 10px; z-index: 9999;">
-        <div class="toast-body text-white bg-danger">{{ __('Certains champs sont invalides') }}</div>
+        <div class="toast-body text-white bg-danger">{{ __('Some fields are invalid') }}</div>
     </div>
 @endif
