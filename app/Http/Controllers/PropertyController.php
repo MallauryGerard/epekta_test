@@ -6,8 +6,6 @@ use App\Enums\LangsEnum;
 use App\Models\Property;
 use App\Models\Property_description;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
@@ -18,8 +16,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::with(['descriptions' => function($query) {
-            return $query->where('lang', strtoupper(App::currentLocale()));
+        $properties = Property::with(['descriptions' => function ($query) {
+            return $query->where('lang', strtoupper(\App::currentLocale()));
         }])->get();
 
         return view('property.index', ['properties' => $properties]);
@@ -37,7 +35,6 @@ class PropertyController extends Controller
 
     /**
      * Store a newly created resource in storage.
-
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -81,7 +78,7 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Property $property
+     * @param Property $property
      * @return \Illuminate\Http\Response
      */
     public function show(Property $property)
@@ -92,7 +89,7 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Property $property
+     * @param Property $property
      * @return \Illuminate\Http\Response
      */
     public function edit(Property $property)
@@ -103,8 +100,8 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Property $property
+     * @param \Illuminate\Http\Request $request
+     * @param Property $property
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Property $property)
@@ -115,14 +112,18 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Property $property
+     * @param \Illuminate\Http\Request $request
+     * @param Property $property
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Request $request, Property $property)
     {
         $property->clearMediaCollection(Property::$media_collection);
         Property::destroy($property->id); // Descriptions are automatically destroyed thank to "ONDELETE CASCADE".
-
-        return redirect(route('property.index'))->with('success', __('Property has been deleted!'));
+        if ($request->ajax()) {
+            return 1;
+        } else {
+            return redirect(route('property.index'))->with('success', __('Property has been deleted!'));
+        }
     }
 }

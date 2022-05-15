@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name') }} @yield('title')</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/mdb.min.css') }}">
@@ -31,15 +31,12 @@
                     </li>
                 </ul>
             </div>
-            @if(Route::currentRouteName() == 'login')
-                <a class="btn btn-primary ml-auto" href="{{ route('register') }}">
-                    {{ __('Register') }}
-                </a>
-            @else
-                <a class="btn btn-primary ml-auto" href="{{ route('login') }}">
-                    {{ __('Login') }}
-                </a>
-            @endif
+            <form id="logout-form" class="" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary mx-auto">
+                    <i class="fas fa-power-off"></i>
+                </button>
+            </form>
         </div>
     </nav>
     <!-- Navbar -->
@@ -63,7 +60,7 @@
 <script src="{{ asset('/js/mdb.min.js') }}"></script>
 <script src="{{ asset('/js/font-awesome.min.js') }}"></script>
 
-@yield('scripts')
+@stack('scripts')
 
 <script>
     $('.toast').delay(5000).fadeOut('slow');

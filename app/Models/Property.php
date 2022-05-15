@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\FormatDate;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Property extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use FormatDate, InteractsWithMedia;
+
+    const CURRENCY = [
+        'en' => '$',
+        'fr' => '€',
+    ];
 
     protected $table = 'Properties';
     public static $media_collection = 'property';
@@ -31,5 +37,17 @@ class Property extends Model implements HasMedia
     public function descriptions()
     {
         return $this->hasMany(Property_description::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormattedPrice() {
+        if (\App::currentLocale() == 'fr') {
+            $formatted = number_format($this->price, 2, ',', ' ');
+        } else {
+            $formatted = number_format($this->price, 2, '.', ',');
+        }
+        return $formatted . ' ' . self::CURRENCY[\App::currentLocale()];
     }
 }
